@@ -233,25 +233,37 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
 .accepted-card .stat-icon { background: #ECFEFF; color: #06B6D4; }
 .received-card .stat-icon { background: #ECFDF5; color: #10B981; }
 
-/* ---------- PINAGANDANG TABLE CONTAINER & PANEL ---------- */
+/* ---------- ESTETIK AT DESIGNED NA TABLE CONTAINER & PANEL ---------- */
 .custom-panel {
   background: #FFFFFF;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   border: 1px solid var(--line);
+  position: relative;
+}
+
+/* Nilagyan natin ng eleganteng orange gradient line sa mismong ibabaw ng panel */
+.custom-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FF6600, #FFAA33);
 }
 
 .panel-header-title {
-  padding: 22px 28px;
-  font-size: 15px;
+  padding: 24px 28px;
+  font-size: 15.5px;
   font-weight: 700;
   color: #111827;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   border-bottom: 1px solid var(--line);
-  background: #FAFAFA;
+  background: #FAFAFB;
 }
 
 .table-container {
@@ -272,7 +284,7 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
   padding: 16px 28px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   border: none;
 }
@@ -282,16 +294,23 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
   border-bottom: 1px solid #F3F4F6;
   font-size: 13.5px;
   color: #374151;
-  transition: background 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .custom-table tbody tr:last-child td {
   border-bottom: none;
 }
 
+/* Zebra Striping: Para magkasunod na light gray at puti ang rows, madaling basahin */
+.custom-table tbody tr:nth-child(even) {
+  background-color: #FAFAFC;
+}
+
+/* Hover Effect: Magiging kulay kahel-kahel ang row pag tinutok ang mouse */
 .custom-table tbody tr:hover td {
-  background-color: #FFFAF5; /* Malambot na orange tint kapag hinaplos ng mouse */
+  background-color: #FFF4EE !important;
   color: #111827;
+  transform: scale(1.001);
 }
 
 /* ---------- MAS PINAGANDANG NEW ORDER FORM & CARDS ---------- */
