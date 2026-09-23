@@ -443,7 +443,9 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
   margin-top: 4px;
 }
 
+/* Ginawa nating clickable link ang mga item cards na may tamang hover effect */
 .item-card-box {
+  text-decoration: none;
   background: #FFFFFF;
   border-radius: 12px;
   padding: 18px 20px;
