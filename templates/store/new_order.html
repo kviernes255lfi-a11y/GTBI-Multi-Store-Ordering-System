@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <!-- Items Grid Cards na may Expandable / Dropdown List -->
+  <!-- Items Grid Cards na may Full-Width Expandable Dropdown -->
   <div class="items-grid">
     {% set categories = [
       ("WRAPPER", 6), ("BAGS", 6), ("BOXES", 20),
@@ -49,14 +49,14 @@
         <span class="item-count-badge">{{ count }}</span>
       </a>
       
-      <!-- Ang Dropdown List na lilitaw kapag pinindot -->
+      <!-- Ang Dropdown List na lilitaw at sasakop sa buong row -->
       <div id="cat-{{ loop.index }}" class="category-dropdown-list" style="display: none;">
         <div class="dropdown-header">
           <span>ITEM</span>
           <span>QTY</span>
         </div>
         
-        <!-- Mga konkretong item sa loob ng kategoryang ito -->
+        <!-- Mga konkretong item sa loob ng kategoryang ito (Naka-grid column para maganda tingnan) -->
         <div class="dropdown-items-container">
           <div class="dropdown-item-row">
             <div class="item-info-text">
@@ -99,14 +99,18 @@
 
 </div>
 
-<!-- JavaScript para sa pag-toggle ng mga kategorya -->
+<!-- JavaScript para sa pag-toggle at full-width expansion -->
 <script>
 function toggleCategory(elementId) {
   var el = document.getElementById(elementId);
+  var container = el.closest('.item-card-container');
+  
   if (el.style.display === "none" || el.style.display === "") {
     el.style.display = "block";
+    container.classList.add('active-expanded');
   } else {
     el.style.display = "none";
+    container.classList.remove('active-expanded');
   }
 }
 </script>
