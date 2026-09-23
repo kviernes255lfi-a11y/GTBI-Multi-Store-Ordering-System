@@ -16,10 +16,10 @@
       <label>Store Branch:</label>
       <input type="text" value="{{ current_user.store.name }}" readonly>
     </div>
-    <div class="field">
-      <label>P.O. Date:</label>
-      <input type="text" value="{{ current_date|default('09/23/2026') }}" readonly>
-    </div>
+   <div class="field">
+  <label>P.O. Number:</label>
+  <input type="text" value="{{ po_number|default('PO-20260923-001') }}" readonly style="color: #FF6600; font-weight: 700;">
+</div>
     <div class="field" style="grid-column: 1 / -1;">
       <label>Prepared By (Crew / Staff Name):</label>
       <input type="text" placeholder="I-type ang buong pangalan ng nag-order...">
