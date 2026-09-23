@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Trans-In — Golden Tri-Bloc Inc.{% endblock %}
+{% block page_title %}Trans-In{% endblock %}
+{% block page_sub %}HQ Administrator view{% endblock %}
+{% block content %}
+<div class="panel">
+  <h3>Record stock transfer between stores</h3>
+  <form method="post" class="form-row">
+    <div class="field"><label>From store</label>
+      <select name="from_store">{% for s in stores %}<option value="{{ s.name }}">{{ s.name }}</option>{% endfor %}</select>
+    </div>
+    <div class="field"><label>To store</label>
+      <select name="to_store">{% for s in stores %}<option value="{{ s.name }}">{{ s.name }}</option>{% endfor %}</select>
+    </div>
+    <div class="field"><label>Item</label>
+      <select name="item_name">{% for it in items %}<option value="{{ it.name }}">{{ it.name }}</option>{% endfor %}</select>
+    </div>
+    <div class="field"><label>Quantity</label><input name="qty" type="number" min="1" value="1"></div>
+    <button class="add-btn" type="submit">Record transfer</button>
+  </form>
+</div>
+<div class="panel">
+  <h3>Transfer log ({{ records|length }})</h3>
+  <table>
+    <thead><tr><th>ID</th><th>From</th><th>To</th><th>Item</th><th>Qty</th><th>Date</th></tr></thead>
+    <tbody>
+      {% for t in records %}
+      <tr>
+        <td class="mono">TIN-{{ '%04d'|format(t.id) }}</td><td>{{ t.from_store }}</td>
+        <td>{{ t.to_store }}</td><td>{{ t.item_name }}</td><td>{{ t.qty }}</td>
+        <td>{{ t.created_at.strftime('%b %d, %Y') }}</td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="6">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

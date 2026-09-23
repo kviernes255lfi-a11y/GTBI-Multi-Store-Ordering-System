@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}View Orders — Golden Tri-Bloc Inc.{% endblock %}
+{% block page_title %}View Orders{% endblock %}
+{% block page_sub %}HQ Administrator view{% endblock %}
+{% block content %}
+<div class="panel">
+  <h3>All store orders ({{ orders|length }})</h3>
+  <table>
+    <thead><tr><th>Order ID</th><th>Store</th><th>Item</th><th>Qty</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+    <tbody>
+      {% for o in orders %}
+      <tr>
+        <td class="mono">ORD-{{ '%04d'|format(o.id) }}</td><td>{{ o.store.name }}</td>
+        <td>{{ o.item_name }}</td><td>{{ o.qty }}</td>
+        <td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td>
+        <td>{{ o.created_at.strftime('%b %d, %Y') }}</td>
+        <td>
+          {% if o.status == 'Pending' %}
+          <form method="post" action="{{ url_for('admin.update_order', order_id=o.id, status='Approved') }}" style="display:inline">
+            <button class="del" style="color:var(--teal-dark)" type="submit">Approve</button></form>
+          <form method="post" action="{{ url_for('admin.update_order', order_id=o.id, status='Rejected') }}" style="display:inline">
+            <button class="del" type="submit">Reject</button></form>
+          {% else %}—{% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="7">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

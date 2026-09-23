@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Generate Report — Golden Tri-Bloc Inc.{% endblock %}
+{% block page_title %}Generate Report{% endblock %}
+{% block page_sub %}HQ Administrator view{% endblock %}
+{% block content %}
+<div class="panel">
+  <h3>Generate report</h3>
+  <p style="color:var(--ink-soft);font-size:13px;margin:0 0 14px;">A live snapshot compiled from current orders, inventory, spoilage and purchase order data.</p>
+  <div class="report-box">STORELINE — SUMMARY REPORT
+Generated: {{ generated }}
+
+ORDERS
+  Total orders placed ......... {{ total_orders }}
+  Pending approval ............ {{ pending }}
+  Approved .................... {{ approved }}
+
+INVENTORY
+  Master items tracked ........ {{ items }}
+  Spoilage units logged ....... {{ spoil_units }}
+  Stock transfers recorded .... {{ transfers }}
+  Month-end counts recorded ... {{ monthend }}
+
+PURCHASE ORDERS (HQ)
+  Total P.O.s .................. {{ po_total }}
+  Open / pending ................ {{ po_open }}
+
+BY STORE
+{{ by_store }}</div>
+  <button class="add-btn" style="margin-top:14px" onclick="window.print()">Print report</button>
+</div>
+{% endblock %}

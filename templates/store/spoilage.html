@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Spoilage — Golden Tri-Bloc Inc.{% endblock %}
+{% block page_title %}Spoilage{% endblock %}
+{% block page_sub %}{{ current_user.store.name }} view{% endblock %}
+{% block content %}
+<div class="panel">
+  <h3>Log spoilage — {{ current_user.store.name }}</h3>
+  <form method="post" class="form-row">
+    <div class="field"><label>Item</label>
+      <select name="item_name">{% for it in items %}<option value="{{ it.name }}">{{ it.name }}</option>{% endfor %}</select>
+    </div>
+    <div class="field"><label>Quantity</label><input name="qty" type="number" min="1" value="1"></div>
+    <div class="field"><label>Reason</label><input name="reason" placeholder="e.g. Expired, damaged"></div>
+    <button class="add-btn" type="submit">Log entry</button>
+  </form>
+</div>
+<div class="panel">
+  <h3>Spoilage records ({{ records|length }})</h3>
+  <table>
+    <thead><tr><th>ID</th><th>Item</th><th>Qty</th><th>Reason</th><th>Date</th></tr></thead>
+    <tbody>
+      {% for r in records %}
+      <tr>
+        <td class="mono">SPL-{{ '%04d'|format(r.id) }}</td><td>{{ r.item_name }}</td><td>{{ r.qty }}</td>
+        <td>{{ r.reason }}</td><td>{{ r.created_at.strftime('%b %d, %Y') }}</td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="5">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

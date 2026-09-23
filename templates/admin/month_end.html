@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Month End Inventory — Golden Tri-Bloc Inc.{% endblock %}
+{% block page_title %}Month End Inventory{% endblock %}
+{% block page_sub %}HQ Administrator view{% endblock %}
+{% block content %}
+<div class="panel">
+  <h3>Month end inventory count</h3>
+  <form method="post" class="form-row">
+    <div class="field"><label>Store</label>
+      <select name="store_id">{% for s in stores %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}</select>
+    </div>
+    <div class="field"><label>Item</label>
+      <select name="item_name">{% for it in items %}<option value="{{ it.name }}">{{ it.name }}</option>{% endfor %}</select>
+    </div>
+    <div class="field"><label>Counted qty</label><input name="counted_qty" type="number" min="0" value="0"></div>
+    <button class="add-btn" type="submit">Record count</button>
+  </form>
+</div>
+<div class="panel">
+  <h3>Month end records ({{ records|length }})</h3>
+  <table>
+    <thead><tr><th>ID</th><th>Store</th><th>Item</th><th>System Qty</th><th>Counted</th><th>Variance</th><th>Date</th></tr></thead>
+    <tbody>
+      {% for m in records %}
+      <tr>
+        <td class="mono">ME-{{ '%04d'|format(m.id) }}</td><td>{{ m.store.name }}</td>
+        <td>{{ m.item_name }}</td><td>{{ m.system_qty }}</td><td>{{ m.counted_qty }}</td>
+        <td style="color:{{ 'var(--red)' if m.variance != 0 else 'inherit' }}">{{ '+' if m.variance > 0 }}{{ m.variance }}</td>
+        <td>{{ m.created_at.strftime('%b %d, %Y') }}</td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="7">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

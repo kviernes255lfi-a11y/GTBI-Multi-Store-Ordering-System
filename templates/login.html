@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Log in — Golden Tri-Bloc Inc.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div id="login">
+  <div class="login-card">
+    <div class="logo-circle"><img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Golden Tri-Bloc Inc. logo"></div>
+    <h1 class="company-name">Golden Tri-Bloc Inc.</h1>
+    <p class="company-sub">Multi-Store Ordering System</p>
+    <form method="post">
+      <div class="field"><label>Username</label><input name="username" placeholder="Enter username" autofocus required></div>
+      <div class="field"><label>Password</label><input name="password" type="password" placeholder="Enter password" required></div>
+      {% if error %}<p class="login-error" style="display:block">{{ error }}</p>{% endif %}
+      <button class="primary-btn" type="submit">Log in</button>
+    </form>
+    <p class="login-hint">Default demo accounts: <b>admin</b> / admin123 for HQ, or <b>taytaybranch</b> / store123 for a store.</p>
+    <p class="footer-copy">© 2026 Golden Tri-Bloc Inc. All rights reserved.</p>
+  </div>
+</div>
+</body>
+</html>
