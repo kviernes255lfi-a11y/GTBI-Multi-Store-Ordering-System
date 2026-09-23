@@ -58,11 +58,124 @@ nav a.active{background:rgba(0,0,0,.22);color:#ffffff;border-left-color:#FEF08A;
 .topbar h1{font-size:21px;margin:0;letter-spacing:-.01em;}
 .topbar .sub{color:var(--ink-soft);font-size:13px;}
 
-.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px;}
-.stat{background:var(--panel);border:1px solid var(--line);padding:16px 18px;}
-.stat .n{font-size:26px;font-weight:700;font-family:'IBM Plex Mono',monospace;}
-.stat .l{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+/* ---------- CUSTOM STAT CARDS (Bagong Design) ---------- */
+.custom-stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
 
+.stat-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border-left: 6px solid #ccc;
+}
+
+.stat-card.pending-card { border-left-color: #F97316; }   /* Orange */
+.stat-card.accepted-card { border-left-color: #06B6D4; }  /* Cyan / Blue */
+.stat-card.received-card { border-left-color: #22C55E; }  /* Green */
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6B7280;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+  color: #1F2937;
+  line-height: 1;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.pending-card .stat-icon { background: #FFF7ED; color: #F97316; }
+.accepted-card .stat-icon { background: #ECFEFF; color: #06B6D4; }
+.received-card .stat-icon { background: #F0FDF4; color: #22C55E; }
+
+
+/* ---------- CUSTOM PANEL & TABLE (Matingkad na Orange Header) ---------- */
+.custom-panel {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  border: 1px solid #E5E7EB;
+}
+
+.panel-header-title {
+  padding: 20px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1F2937;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: #FF6600 !important;
+  color: #FFFFFF !important;
+  padding: 14px 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border: none;
+}
+
+.custom-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #F3F4F6;
+  font-size: 13.5px;
+  color: #374151;
+}
+
+.custom-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #FAFAFA;
+}
+
+/* Old classes for fallback support */
 .panel{background:var(--panel);border:1px solid var(--line);padding:20px;margin-bottom:20px;}
 .panel h3{margin:0 0 14px;font-size:14px;font-weight:600;}
 .form-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px;}
@@ -76,10 +189,12 @@ td{padding:9px 10px;border-bottom:1px solid var(--line);}
 tr:last-child td{border-bottom:none;}
 .empty-row td{color:var(--ink-soft);text-align:center;padding:22px;font-style:italic;}
 .del{background:none;border:none;color:var(--red);font-size:12px;font-weight:600;padding:4px 6px;}
-.badge{padding:2px 8px;font-size:11px;font-weight:600;border-radius:2px;}
-.badge.pending{background:#F1D9B0;color:#7A5417;}
+
+.badge{padding:4px 12px;font-size:11px;font-weight:700;border-radius:20px;letter-spacing:0.05em;}
+.badge.pending{background:#FEF3C7;color:#D97706;}
 .badge.approved,.badge.received{background:#C7E3D9;color:#1E5A48;}
 .badge.rejected{background:#F0C9C4;color:#7A2A20;}
+
 .report-box{white-space:pre-wrap;font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--line);padding:16px;line-height:1.7;}
 
 @media(max-width:760px){
