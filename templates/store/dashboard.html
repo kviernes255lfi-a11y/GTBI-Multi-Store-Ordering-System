@@ -3,27 +3,63 @@
 {% block page_title %}Dashboard{% endblock %}
 {% block page_sub %}{{ current_user.store.name }} view{% endblock %}
 {% block content %}
-<div class="stat-row">
-  <div class="stat"><div class="n">{{ stats.orders }}</div><div class="l">Orders placed</div></div>
-  <div class="stat"><div class="n">{{ stats.pending }}</div><div class="l">Pending orders</div></div>
-  <div class="stat"><div class="n">{{ stats.accepted|default(0) }}</div><div class="l">Accepted orders</div></div>
-  <div class="stat"><div class="n">{{ stats.received|default(0) }}</div><div class="l">Received orders</div></div>
+
+<!-- 3 Status Cards na may colored left border at icon -->
+<div class="custom-stat-row">
+  <div class="stat-card pending-card">
+    <div class="stat-content">
+      <span class="stat-label">Pending Orders</span>
+      <span class="stat-num">{{ stats.pending|default(0) }}</span>
+    </div>
+    <div class="stat-icon"><i class="fas fa-history">icon</i></div>
+  </div>
+
+  <div class="stat-card accepted-card">
+    <div class="stat-content">
+      <span class="stat-label">Accepted Orders</span>
+      <span class="stat-num">{{ stats.accepted|default(0) }}</span>
+    </div>
+    <div class="stat-icon"><i class="fas fa-clipboard-check">icon</i></div>
+  </div>
+
+  <div class="stat-card received-card">
+    <div class="stat-content">
+      <span class="stat-label">Received Orders</span>
+      <span class="stat-num">{{ stats.received|default(0) }}</span>
+    </div>
+    <div class="stat-icon"><i class="fas fa-box">icon</i></div>
+  </div>
 </div>
-<div class="panel">
-  <h3>Your recent orders</h3>
-  <table>
-    <thead><tr><th>Order ID</th><th>Item</th><th>Qty</th><th>Status</th><th>Date</th></tr></thead>
-    <tbody>
-      {% for o in recent_orders %}
-      <tr>
-        <td class="mono">ORD-{{ '%04d'|format(o.id) }}</td><td>{{ o.item_name }}</td><td>{{ o.qty }}</td>
-        <td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td>
-        <td>{{ o.created_at.strftime('%b %d, %Y') }}</td>
-      </tr>
-      {% else %}
-      <tr class="empty-row"><td colspan="5">No records yet.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+
+<!-- Recent Orders Panel na may Orange Header Table -->
+<div class="custom-panel">
+  <div class="panel-header-title">
+    <span class="icon-list">📑</span> Recent Orders
+  </div>
+  <div class="table-container">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>PO No.</th>
+          <th>Store Name</th>
+          <th>PO Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in recent_orders %}
+        <tr>
+          <td class="mono font-bold">PO-{{ o.created_at.strftime('%Y%m%d') }}-{{ '%03d'|format(o.id) }}</td>
+          <td>{{ current_user.store.name }}</td>
+          <td>{{ o.created_at.strftime('%Y-%m-%d') }}</td>
+          <td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td>
+        </tr>
+        {% else %}
+        <tr class="empty-row"><td colspan="4">No records yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
+
 {% endblock %}
