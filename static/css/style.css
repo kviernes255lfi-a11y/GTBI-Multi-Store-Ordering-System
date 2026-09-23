@@ -37,20 +37,22 @@ a{color:inherit;}
 .primary-btn{width:100%;padding:13px;background:linear-gradient(90deg,var(--amber-dark),var(--amber));color:#fff;border:none;border-radius:7px;font-weight:700;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;margin-top:8px;}
 .primary-btn:hover{filter:brightness(1.06);}
 
-/* ---------- APP SHELL ---------- */
+/* ---------- APP SHELL & LIGHT SIDEBAR ---------- */
 .shell{display:flex;min-height:100vh;}
-.sidebar{width:230px;flex-shrink:0;background:#EA580C;color:#FFF7ED;display:flex;flex-direction:column;padding:20px 0;border-right:1px solid #C2410C;}
-.sidebar .brand{display:flex;align-items:center;gap:10px;color:#ffffff;padding:0 20px 20px;margin:0;border-bottom:1px solid rgba(255,255,255,.18);font-size:15px;font-weight:700;letter-spacing:-.01em;}
+.sidebar{width:230px;flex-shrink:0;background:#FAF9F5;color:var(--ink);display:flex;flex-direction:column;padding:20px 0;border-right:1px solid var(--line);}
+.sidebar .brand{display:flex;align-items:center;gap:10px;color:var(--ink);padding:0 20px 20px;margin:0;border-bottom:1px solid var(--line);font-size:15px;font-weight:700;letter-spacing:-.01em;}
 .sidebar .brand img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#FBF6EE;}
-.sidebar .brand span{color:#FFEDD5;}
+.sidebar .brand span{color:var(--ink);}
+
 nav{flex:1;padding:14px 0;overflow-y:auto;}
-nav a{display:block;text-decoration:none;padding:11px 20px;color:#FFEDD5;font-size:14px;font-weight:500;border-left:3px solid transparent;}
-nav a:hover{background:rgba(255,255,255,.15);color:#ffffff;}
-nav a.active{background:rgba(0,0,0,.22);color:#ffffff;border-left-color:#FEF08A;font-weight:600;}
-.sidebar-foot{padding:14px 20px 0;border-top:1px solid rgba(255,255,255,.18);}
-.who{font-size:12px;color:#FEF08A;margin-bottom:10px;}
-.who b{color:#ffffff;display:block;font-size:13px;}
-.logout-btn{display:block;text-align:center;text-decoration:none;width:100%;padding:9px;background:transparent;border:1px solid rgba(255,255,255,.35);color:#FFF7ED;font-size:13px;font-weight:600;box-sizing:border-box;}
+nav a{display:block;text-decoration:none;padding:11px 20px;color:var(--ink-soft);font-size:14px;font-weight:500;border-left:3px solid transparent;transition:all 0.2s;}
+nav a:hover{background:#F3F4F6;color:var(--ink);}
+nav a.active{background:#EA580C;color:#ffffff;border-left-color:#C2410C;font-weight:600;}
+
+.sidebar-foot{padding:14px 20px 0;border-top:1px solid var(--line);}
+.who{font-size:12px;color:var(--ink-soft);margin-bottom:10px;}
+.who b{color:var(--ink);display:block;font-size:13px;}
+.logout-btn{display:block;text-align:center;text-decoration:none;width:100%;padding:9px;background:transparent;border:1px solid var(--line);color:var(--ink-soft);font-size:13px;font-weight:600;box-sizing:border-box;border-radius:6px;}
 .logout-btn:hover{background:var(--red);border-color:var(--red);color:#fff;}
 
 .main{flex:1;min-width:0;padding:28px 34px;overflow-x:auto;}
@@ -58,7 +60,7 @@ nav a.active{background:rgba(0,0,0,.22);color:#ffffff;border-left-color:#FEF08A;
 .topbar h1{font-size:21px;margin:0;letter-spacing:-.01em;}
 .topbar .sub{color:var(--ink-soft);font-size:13px;}
 
-/* ---------- CUSTOM STAT CARDS (Bagong Design) ---------- */
+/* ---------- CUSTOM STAT CARDS ---------- */
 .custom-stat-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -117,7 +119,6 @@ nav a.active{background:rgba(0,0,0,.22);color:#ffffff;border-left-color:#FEF08A;
 .accepted-card .stat-icon { background: #ECFEFF; color: #06B6D4; }
 .received-card .stat-icon { background: #F0FDF4; color: #22C55E; }
 
-
 /* ---------- CUSTOM PANEL & TABLE (Matingkad na Orange Header) ---------- */
 .custom-panel {
   background: #FFFFFF;
@@ -175,7 +176,7 @@ nav a.active{background:rgba(0,0,0,.22);color:#ffffff;border-left-color:#FEF08A;
   background-color: #FAFAFA;
 }
 
-/* Old classes for fallback support */
+/* Fallback Classes */
 .panel{background:var(--panel);border:1px solid var(--line);padding:20px;margin-bottom:20px;}
 .panel h3{margin:0 0 14px;font-size:14px;font-weight:600;}
 .form-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px;}
