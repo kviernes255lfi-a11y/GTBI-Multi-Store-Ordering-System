@@ -233,17 +233,17 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
 .accepted-card .stat-icon { background: #ECFEFF; color: #06B6D4; }
 .received-card .stat-icon { background: #ECFDF5; color: #10B981; }
 
-/* ---------- REFINED TABLE PANEL ---------- */
+/* ---------- PINAGANDANG TABLE CONTAINER & PANEL ---------- */
 .custom-panel {
   background: #FFFFFF;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   overflow: hidden;
   border: 1px solid var(--line);
 }
 
 .panel-header-title {
-  padding: 20px 24px;
+  padding: 22px 28px;
   font-size: 15px;
   font-weight: 700;
   color: #111827;
@@ -257,6 +257,7 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
 .table-container {
   width: 100%;
   overflow-x: auto;
+  background: #FFFFFF;
 }
 
 .custom-table {
@@ -268,7 +269,7 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
 .custom-table th {
   background-color: #FF6600 !important;
   color: #FFFFFF !important;
-  padding: 14px 24px;
+  padding: 16px 28px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -277,18 +278,20 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
 }
 
 .custom-table td {
-  padding: 18px 24px;
+  padding: 18px 28px;
   border-bottom: 1px solid #F3F4F6;
   font-size: 13.5px;
   color: #374151;
+  transition: background 0.15s ease;
 }
 
 .custom-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.custom-table tbody tr:hover {
-  background-color: #FAFAFA;
+.custom-table tbody tr:hover td {
+  background-color: #FFFAF5; /* Malambot na orange tint kapag hinaplos ng mouse */
+  color: #111827;
 }
 
 /* ---------- MAS PINAGANDANG NEW ORDER FORM & CARDS ---------- */
