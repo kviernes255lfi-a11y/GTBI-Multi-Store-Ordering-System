@@ -27,9 +27,9 @@
         <a href="{{ url_for('admin.report') }}" class="{{ 'active' if request.endpoint=='admin.report' }}">Generate Report</a>
       {% else %}
         <a href="{{ url_for('store.dashboard') }}" class="{{ 'active' if request.endpoint=='store.dashboard' }}">Dashboard</a>
-        <a href="{{ url_for('store.pending_orders') }}" class="{{ 'active' if request.endpoint=='store.pending_orders' }}">Pending Orders</a>
-        <a href="{{ url_for('store.accepted_orders') }}" class="{{ 'active' if request.endpoint=='store.accepted_orders' }}">Accepted Orders</a>
-        <a href="{{ url_for('store.received_orders') }}" class="{{ 'active' if request.endpoint=='store.received_orders' }}">Received Orders</a>
+        <a href="{{ url_for('store.new_order') }}" class="{{ 'active' if request.endpoint=='store.new_order' }}">New Orders</a>
+        <a href="{{ url_for('store.orders') }}" class="{{ 'active' if request.endpoint=='store.orders' }}">View Orders</a>
+        <a href="{{ url_for('store.spoilage') }}" class="{{ 'active' if request.endpoint=='store.spoilage' }}">Spoilage</a>
       {% endif %}
     </nav>
     <div class="sidebar-foot">
