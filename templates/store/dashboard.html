@@ -4,14 +4,13 @@
 {% block page_sub %}{{ current_user.store.name }} view{% endblock %}
 {% block content %}
 
-<!-- 3 Status Cards na may colored left border at icon -->
 <div class="custom-stat-row">
   <div class="stat-card pending-card">
     <div class="stat-content">
       <span class="stat-label">Pending Orders</span>
       <span class="stat-num">{{ stats.pending|default(0) }}</span>
     </div>
-    <div class="stat-icon"><i class="fas fa-history">icon</i></div>
+    <div class="stat-icon"><i class="fas fa-clock"></i></div>
   </div>
 
   <div class="stat-card accepted-card">
@@ -19,7 +18,7 @@
       <span class="stat-label">Accepted Orders</span>
       <span class="stat-num">{{ stats.accepted|default(0) }}</span>
     </div>
-    <div class="stat-icon"><i class="fas fa-clipboard-check">icon</i></div>
+    <div class="stat-icon"><i class="fas fa-clipboard-check"></i></div>
   </div>
 
   <div class="stat-card received-card">
@@ -27,14 +26,13 @@
       <span class="stat-label">Received Orders</span>
       <span class="stat-num">{{ stats.received|default(0) }}</span>
     </div>
-    <div class="stat-icon"><i class="fas fa-box">icon</i></div>
+    <div class="stat-icon"><i class="fas fa-box-open"></i></div>
   </div>
 </div>
 
-<!-- Recent Orders Panel na may Orange Header Table -->
 <div class="custom-panel">
   <div class="panel-header-title">
-    <span class="icon-list">📑</span> Recent Orders
+    <i class="fas fa-list-ul" style="color: #EA580C;"></i> Recent Orders
   </div>
   <div class="table-container">
     <table class="custom-table">
