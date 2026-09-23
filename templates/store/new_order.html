@@ -8,27 +8,27 @@
   
   <!-- Top Meta Form Info -->
   <div class="order-meta-box">
-    <div class="field" style="margin-bottom:0;">
+    <div class="field">
       <label>P.O. Number:</label>
-      <input type="text" value="{{ po_number|default('PO-20260923-004') }}" readonly style="color: #EA580C; font-weight: 700;">
+      <input type="text" value="{{ po_number|default('PO-20260923-004') }}" readonly style="color: #FF6600; font-weight: 700;">
     </div>
-    <div class="field" style="margin-bottom:0;">
+    <div class="field">
       <label>Store Branch:</label>
       <input type="text" value="{{ current_user.store.name }}" readonly>
     </div>
-    <div class="field" style="margin-bottom:0;">
+    <div class="field">
       <label>P.O. Date:</label>
       <input type="text" value="{{ current_date|default('09/23/2026') }}" readonly>
     </div>
-    <div class="field" style="margin-bottom:0;">
+    <div class="field" style="grid-column: 1 / -1;">
       <label>Prepared By (Crew / Staff Name):</label>
-      <input type="text" placeholder="I-type ang pangalan ng nag-order...">
+      <input type="text" placeholder="I-type ang buong pangalan ng nag-order...">
     </div>
   </div>
 
   <!-- Search Raw Material Box -->
   <div class="search-item-box">
-    <div class="field" style="margin-bottom:0;">
+    <div class="field">
       <label>Search Raw Material Item:</label>
       <input type="text" placeholder="Maghanap ng raw material o item...">
     </div>
