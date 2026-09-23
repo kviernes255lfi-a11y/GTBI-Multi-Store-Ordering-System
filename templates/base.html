@@ -13,7 +13,14 @@
 <body>
 <div class="shell">
   <div class="sidebar">
-    <div class="brand"><img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo"><span>Golden Tri-Bloc</span></div>
+    <!-- NA-UPDATE NA BRAND SECTION -->
+    <div class="brand">
+      <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo">
+      <div class="brand-text">
+        <span class="brand-title">Golden Tri-Bloc</span>
+        <span class="brand-sub">Multi-Store Ordering System</span>
+      </div>
+    </div>
     <nav>
       {% if current_user.role == 'admin' %}
         <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request.endpoint=='admin.dashboard' }}">Dashboard</a>
