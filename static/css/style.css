@@ -193,9 +193,9 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
   overflow: hidden;
 }
 
-.stat-card.pending-card { border-left-color: #F97316; }   /* Orange */
-.stat-card.accepted-card { border-left-color: #06B6D4; }  /* Cyan */
-.stat-card.received-card { border-left-color: #10B981; }  /* Green */
+.stat-card.pending-card { border-left-color: #F97316; }   
+.stat-card.accepted-card { border-left-color: #06B6D4; }  
+.stat-card.received-card { border-left-color: #10B981; }  
 
 .stat-content {
   display: flex;
@@ -291,22 +291,22 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
   background-color: #FAFAFA;
 }
 
-/* ---------- PINAGANDANG NEW ORDER FORM & CARDS ---------- */
+/* ---------- MAS PINAGANDANG NEW ORDER FORM & CARDS ---------- */
 .order-form-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   max-width: 1400px;
 }
 
 .order-meta-box {
   background: #FFFFFF;
-  border-radius: 14px;
-  padding: 28px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   border: 1px solid var(--line);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
 
@@ -327,7 +327,7 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
   width: 100%;
   padding: 12px 14px;
   border: 1.5px solid #E5E7EB;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #F9FAFB;
   font-size: 14px;
   color: #111827;
@@ -343,9 +343,9 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
 
 .search-item-box {
   background: #FFFFFF;
-  border-radius: 14px;
-  padding: 24px 28px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border-radius: 16px;
+  padding: 20px 28px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   border: 1px solid var(--line);
 }
 
@@ -366,10 +366,11 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
   width: 100%;
   padding: 13px 16px;
   border: 1.5px solid #E5E7EB;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #F9FAFB;
   font-size: 14px;
   color: #111827;
+  transition: all 0.2s;
 }
 
 .search-item-box .field input:focus {
@@ -381,43 +382,45 @@ nav a.active{background:#FF6600;color:#ffffff;font-weight:600;box-shadow: 0 4px 
 
 .items-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
-  margin-bottom: 10px;
+  margin-top: 4px;
 }
 
 .item-card-box {
   background: #FFFFFF;
   border-radius: 12px;
-  padding: 18px 22px;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
   border: 1px solid var(--line);
-  border-left: 6px solid #FF6600;
+  border-left: 5px solid #FF6600;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .item-card-box:hover {
   border-color: #CBD5E1;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  border-left-color: #E05A00;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  background: #FFFAF5;
 }
 
 .item-name {
   font-size: 13px;
   font-weight: 700;
   color: #111827;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
 }
 
 .item-count-badge {
   background: #FFF7ED;
   color: #FF6600;
   border: 1px solid #FFEDD5;
-  padding: 5px 14px;
+  padding: 5px 12px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 700;
