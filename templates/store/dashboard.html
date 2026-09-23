@@ -6,8 +6,8 @@
 <div class="stat-row">
   <div class="stat"><div class="n">{{ stats.orders }}</div><div class="l">Orders placed</div></div>
   <div class="stat"><div class="n">{{ stats.pending }}</div><div class="l">Pending orders</div></div>
-  <div class="stat"><div class="n">{{ stats.spoilage }}</div><div class="l">Spoilage logged</div></div>
-  <div class="stat"><div class="n">{{ stats.items }}</div><div class="l">Items in catalog</div></div>
+  <div class="stat"><div class="n">{{ stats.accepted|default(0) }}</div><div class="l">Accepted orders</div></div>
+  <div class="stat"><div class="n">{{ stats.received|default(0) }}</div><div class="l">Received orders</div></div>
 </div>
 <div class="panel">
   <h3>Your recent orders</h3>
