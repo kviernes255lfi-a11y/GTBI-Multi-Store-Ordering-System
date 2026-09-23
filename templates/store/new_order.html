@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <!-- Items Grid Cards -->
+  <!-- Items Grid Cards (Naayos na ginawang <a> tags para maging clickable) -->
   <div class="items-grid">
     {% set items = [
       ("WRAPPER", 6), ("BAGS", 6), ("BOXES", 20),
@@ -47,10 +47,10 @@
     ] %}
 
     {% for name, count in items %}
-    <div class="item-card-box">
+    <a href="#" class="item-card-box">
       <span class="item-name">{{ name }}</span>
       <span class="item-count-badge">{{ count }}</span>
-    </div>
+    </a>
     {% endfor %}
   </div>
 
