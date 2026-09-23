@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StoreLine — Inventory & Orders Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1B2430; --ink-soft:#4B5768; --line:#D9D4C7;
+  --bg:#EFEDE5; --panel:#FAF9F5; --teal:#2F6F62; --teal-dark:#204E44;
+  --amber:#E2670F; --amber-dark:#B84E08; --red:#B4483B; --white:#FFFFFF;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  box-sizing:border-box;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#ECE8DE; --ink-soft:#B7B0A0; --line:#3A4048;
+    --bg:#161A1F; --panel:#1E232A; --panel2:#232833;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#ECE8DE; --ink-soft:#B7B0A0; --line:#3A4048;
+  --bg:#161A1F; --panel:#1E232A;
+}
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;height:100%;}
+html,body{height:100%;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+button{font-family:inherit;cursor:pointer;}
+input,select{font-family:inherit;}
+
+/* ---------- LOGIN ---------- */
+#login{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:
+    radial-gradient(700px 500px at 18% 8%, rgba(226,103,15,.38), transparent 60%),
+    radial-gradient(900px 700px at 85% 90%, rgba(47,111,98,.20), transparent 55%),
+    #10141A;
+}
+.login-card{width:100%;max-width:400px;background:#FFFFFF;color:#1B2430;border-radius:14px;padding:40px 36px 30px;position:relative;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);text-align:center;overflow:hidden;}
+.login-card::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--amber-dark),var(--amber));}
+.logo-circle{width:74px;height:74px;border-radius:50%;border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;margin:20px auto 18px;font-size:30px;background:#FBF6EE;}
+.company-name{font-size:19px;font-weight:700;letter-spacing:.03em;margin:0 0 4px;text-transform:uppercase;}
+.company-sub{font-size:11px;letter-spacing:.09em;color:#8A8478;text-transform:uppercase;margin:0 0 28px;font-weight:600;}
+.field{margin-bottom:16px;text-align:left;}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;color:#6B7280;margin-bottom:6px;text-transform:uppercase;}
+.field input,.field select{width:100%;padding:11px 13px;border:1.5px solid #E4E1D8;border-radius:7px;background:#F4F6FA;color:#1B2430;font-size:14px;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--amber);background:#fff;}
+.primary-btn{width:100%;padding:13px;background:linear-gradient(90deg,var(--amber-dark),var(--amber));color:#fff;border:none;border-radius:7px;font-weight:700;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;margin-top:8px;}
+.primary-btn:hover{filter:brightness(1.06);}
+.login-error{color:var(--red);font-size:12.5px;text-align:left;margin:-6px 0 12px;display:none;}
+.login-hint{font-size:11.5px;color:#9B9686;margin:14px 0 0;text-align:left;}
+.footer-copy{font-size:11px;color:#A9A398;margin:26px 0 0;}
+#storeFieldWrap{display:none;}
+
+/* ---------- APP SHELL ---------- */
+#app{display:none;min-height:100vh;}
+.shell{display:flex;min-height:100vh;}
+.sidebar{width:230px;flex-shrink:0;background:var(--ink);color:#EDEAE0;display:flex;flex-direction:column;padding:20px 0;}
+.sidebar .brand{color:#fff;padding:0 20px 20px;margin:0;border-bottom:1px solid rgba(255,255,255,.12);font-size:18px;}
+.sidebar .brand span{color:#7FC4B4;}
+nav{flex:1;padding:14px 0;overflow-y:auto;}
+nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 20px;background:none;border:none;color:#C9C4B5;font-size:14px;font-weight:500;border-left:3px solid transparent;}
+nav button:hover{background:rgba(255,255,255,.05);color:#fff;}
+nav button.active{background:rgba(127,196,180,.12);color:#fff;border-left-color:#7FC4B4;}
+.navdot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5;flex-shrink:0;}
+.sidebar-foot{padding:14px 20px 0;border-top:1px solid rgba(255,255,255,.12);}
+.who{font-size:12px;color:#9B9686;margin-bottom:10px;}
+.who b{color:#fff;display:block;font-size:13px;}
+.logout-btn{width:100%;padding:9px;background:transparent;border:1px solid rgba(255,255,255,.25);color:#EDEAE0;font-size:13px;font-weight:600;}
+.logout-btn:hover{background:var(--red);border-color:var(--red);}
+
+.main{flex:1;min-width:0;padding:28px 34px;overflow-x:auto;}
+.topbar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+.topbar h1{font-size:21px;margin:0;letter-spacing:-.01em;}
+.topbar .sub{color:var(--ink-soft);font-size:13px;}
+
+.section{display:none;}
+.section.active{display:block;}
+
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px;}
+.stat{background:var(--panel);border:1px solid var(--line);padding:16px 18px;}
+.stat .n{font-size:26px;font-weight:700;font-family:'IBM Plex Mono',monospace;}
+.stat .l{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+
+.panel{background:var(--panel);border:1px solid var(--line);padding:20px;margin-bottom:20px;}
+.panel h3{margin:0 0 14px;font-size:14px;font-weight:600;}
+.form-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px;}
+.form-row .field{margin-bottom:0;flex:1;min-width:120px;}
+.add-btn{padding:10px 16px;background:var(--teal);color:#fff;border:none;font-weight:600;font-size:13px;white-space:nowrap;}
+.add-btn:hover{background:var(--teal-dark);}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th{text-align:left;padding:9px 10px;border-bottom:2px solid var(--line);color:var(--ink-soft);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;}
+td{padding:9px 10px;border-bottom:1px solid var(--line);}
+tr:last-child td{border-bottom:none;}
+.empty-row td{color:var(--ink-soft);text-align:center;padding:22px;font-style:italic;}
+.del{background:none;border:none;color:var(--red);font-size:12px;font-weight:600;padding:4px 6px;}
+.badge{padding:2px 8px;font-size:11px;font-weight:600;border-radius:2px;}
+.badge.pending{background:#F1D9B0;color:#7A5417;}
+.badge.approved,.badge.received{background:#C7E3D9;color:#1E5A48;}
+.badge.rejected{background:#F0C9C4;color:#7A2A20;}
+.report-box{white-space:pre-wrap;font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--line);padding:16px;line-height:1.7;}
+@media(max-width:760px){
+  .shell{flex-direction:column;}
+  .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;padding:12px;}
+  .sidebar .brand{border:none;padding:6px 10px;width:100%;}
+  nav{display:flex;flex-wrap:wrap;padding:0 6px;}
+  nav button{width:auto;border-left:none;border-bottom:3px solid transparent;padding:8px 10px;}
+  nav button.active{border-left:none;border-bottom-color:#7FC4B4;}
+  .sidebar-foot{width:100%;border:none;padding:8px 10px 0;}
+  .main{padding:20px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-card">
+    <div class="logo-circle">📦</div>
+    <h1 class="company-name">StoreLine</h1>
+    <p class="company-sub">Multi-Store Ordering System</p>
+    <div class="field"><label>Username</label><input id="loginUser" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <p class="login-error" id="loginError">Please enter a username and password.</p>
+    <button class="primary-btn" onclick="doLogin()">Log in</button>
+    <p class="login-hint">Use <b>admin</b> to sign in as HQ, or a store name (e.g. <b>Taytay Branch</b>) to sign in as that store.</p>
+    <p class="footer-copy">© 2026 StoreLine. All rights reserved.</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<div class="shell">
+  <div class="sidebar">
+    <p class="brand">Store<span>Line</span></p>
+    <nav id="nav"></nav>
+    <div class="sidebar-foot">
+      <div class="who"><b id="whoName"></b><span id="whoRole"></span></div>
+      <button class="logout-btn" onclick="doLogout()">Log out</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub"></div></div>
+    </div>
+    <div id="sections"></div>
+  </div>
+</div>
+</div>
+
+<script>
+/* ---------------- state ---------------- */
+const LS = 'storeline_data_v1';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(LS)); }catch(e){ return null; }
+}
+function seed(){
+  return {
+    stores:[
+      {id:'ST-01',name:'Angono Branch',location:'Angono, Rizal',manager:'J. Cruz'},
+      {id:'ST-02',name:'Taytay Branch',location:'Taytay, Rizal',manager:'R. Dela Peña'},
+      {id:'ST-03',name:'Cainta Branch',location:'Cainta, Rizal',manager:'L. Ramos'}
+    ],
+    inventory:[
+      {id:'ITM-001',name:'Rice 25kg',category:'Grocery',unit:'sack',stock:120},
+      {id:'ITM-002',name:'Cooking Oil 1L',category:'Grocery',unit:'bottle',stock:340},
+      {id:'ITM-003',name:'Canned Sardines',category:'Canned Goods',unit:'can',stock:900},
+      {id:'ITM-004',name:'Bottled Water 500ml',category:'Beverage',unit:'bottle',stock:600}
+    ],
+    orders:[], spoilage:[], transin:[], po:[], monthend:[],
+    seq:1
+  };
+}
+let DATA = load() || seed();
+function save(){ localStorage.setItem(LS, JSON.stringify(DATA)); }
+function nextId(prefix){ const n = DATA.seq++; save(); return prefix+'-'+String(n).padStart(4,'0'); }
+
+let SESSION = null; // {role, name, store}
+
+/* ---------------- login ---------------- */
+function doLogin(){
+  const userEl = document.getElementById('loginUser');
+  const passEl = document.getElementById('loginPass');
+  const username = userEl.value.trim();
+  const password = passEl.value;
+  const errEl = document.getElementById('loginError');
+  if(!username || !password){ errEl.style.display='block'; return; }
+  errEl.style.display='none';
+
+  if(username.toLowerCase() === 'admin'){
+    SESSION = { role:'admin', name:'HQ Admin' };
+  } else {
+    let store = DATA.stores.find(s=>s.name.toLowerCase() === username.toLowerCase())
+             || DATA.stores.find(s=>s.name.toLowerCase().includes(username.toLowerCase()));
+    if(!store){
+      store = { id: nextId('ST'), name: username, location:'—', manager: username };
+      DATA.stores.push(store); save();
+    }
+    SESSION = { role:'store', name: username, store };
+  }
+
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  buildNav();
+  document.getElementById('whoName').textContent = SESSION.name;
+  document.getElementById('whoRole').textContent = SESSION.role==='admin' ? 'HQ Administrator' : SESSION.store.name;
+  goTo(SESSION.role==='admin'?'dash-admin':'dash-store');
+}
+function doLogout(){
+  SESSION = null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('login').style.display='flex';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+}
+
+/* ---------------- nav config ---------------- */
+const ADMIN_NAV = [
+  ['dash-admin','Dashboard'],
+  ['master-inv','Master Inventory Items'],
+  ['manage-stores','Manage Stores'],
+  ['view-orders','View Orders'],
+  ['po-hq','P.O HQ'],
+  ['monthend','Month End Inventory'],
+  ['spoilage','Spoilage'],
+  ['transin','Trans-In'],
+  ['report','Generate Report']
+];
+const STORE_NAV = [
+  ['dash-store','Dashboard'],
+  ['new-order','New Orders'],
+  ['view-orders','View Orders'],
+  ['spoilage','Spoilage']
+];
+function buildNav(){
+  const list = SESSION.role==='admin' ? ADMIN_NAV : STORE_NAV;
+  document.getElementById('nav').innerHTML = list.map(([id,label])=>
+    `<button data-id="${id}" onclick="goTo('${id}')"><span class="navdot"></span>${label}</button>`).join('');
+  document.getElementById('sections').innerHTML = list.map(([id])=>`<div class="section" id="sec-${id}"></div>`).join('');
+}
+function goTo(id){
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.id===id));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const sec = document.getElementById('sec-'+id);
+  sec.classList.add('active');
+  const titles = Object.fromEntries([...ADMIN_NAV, ...STORE_NAV]);
+  document.getElementById('pageTitle').textContent = titles[id] || id;
+  document.getElementById('pageSub').textContent = SESSION.role==='admin' ? 'HQ Administrator view' : (SESSION.store.name+' view');
+  render[id] && render[id](sec);
+}
+
+/* ---------------- helpers ---------------- */
+function fmtDate(d){ return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+function today(){ return new Date().toISOString(); }
+function statRow(items){
+  return `<div class="stat-row">${items.map(([n,l])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('')}</div>`;
+}
+function badge(status){
+  const cls = status.toLowerCase();
+  return `<span class="badge ${cls}">${status}</span>`;
+}
+function tableOrEmpty(rows, headers, cols, colspan){
+  if(!rows.length) return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody><tr class="empty-row"><td colspan="${colspan}">No records yet.</td></tr></tbody></table>`;
+  return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(cols).join('')}</tbody></table>`;
+}
+
+/* ---------------- render functions ---------------- */
+const render = {};
+
+render['dash-admin'] = (el)=>{
+  el.innerHTML = statRow([
+    [DATA.inventory.length,'Inventory items tracked'],
+    [DATA.stores.length,'Active stores'],
+    [DATA.orders.filter(o=>o.status==='Pending').length,'Orders pending'],
+    [DATA.spoilage.length,'Spoilage entries logged'],
+    [DATA.po.filter(p=>p.status==='Pending').length,'Open P.O.s to HQ']
+  ]) + `<div class="panel"><h3>Recent orders across all stores</h3>${
+    tableOrEmpty(DATA.orders.slice(-5).reverse(), ['Order ID','Store','Item','Qty','Status','Date'],
+      o=>`<tr><td class="mono">${o.id}</td><td>${o.store}</td><td>${o.item}</td><td>${o.qty}</td><td>${badge(o.status)}</td><td>${fmtDate(o.date)}</td></tr>`, 6)
+  }</div>`;
+};
+
+render['dash-store'] = (el)=>{
+  const s = SESSION.store.name;
+  const myOrders = DATA.orders.filter(o=>o.store===s);
+  el.innerHTML = statRow([
+    [myOrders.length,'Orders placed'],
+    [myOrders.filter(o=>o.status==='Pending').length,'Pending orders'],
+    [DATA.spoilage.filter(x=>x.store===s).length,'Spoilage logged'],
+    [DATA.inventory.length,'Items in catalog']
+  ]) + `<div class="panel"><h3>Your recent orders</h3>${
+    tableOrEmpty(myOrders.slice(-5).reverse(), ['Order ID','Item','Qty','Status','Date'],
+      o=>`<tr><td class="mono">${o.id}</td><td>${o.item}</td><td>${o.qty}</td><td>${badge(o.status)}</td><td>${fmtDate(o.date)}</td></tr>`, 5)
+  }</div>`;
+};
+
+render['master-inv'] = (el)=>{
+  el.innerHTML = `<div class="panel"><h3>Add inventory item</h3>
+    <div class="form-row">
+      <div class="field"><label>Name</label><input id="mi-name" placeholder="Item name"></div>
+      <div class="field"><label>Category</label><input id="mi-cat" placeholder="e.g. Grocery"></div>
+      <div class="field"><label>Unit</label><input id="mi-unit" placeholder="e.g. pack"></div>
+      <div class="field"><label>Starting stock</label><input id="mi-stock" type="number" value="0"></div>
+      <button class="add-btn" onclick="addInv()">Add item</button>
+    </div></div>
+    <div class="panel"><h3>Master item list (${DATA.inventory.length})</h3>${
+      tableOrEmpty(DATA.inventory,['ID','Name','Category','Unit','Stock',''],
+        i=>`<tr><td class="mono">${i.id}</td><td>${i.name}</td><td>${i.category}</td><td>${i.unit}</td><td>${i.stock}</td><td><button class="del" onclick="delRow('inventory','${i.id}')">Remove</button></td></tr>`,6)
+    }</div>`;
+};
+function addInv(){
+  const name=document.getElementById('mi-name').value.trim();
+  if(!name) return;
+  DATA.inventory.push({id:nextId('ITM'),name,category:document.getElementById('mi-cat').value||'General',unit:document.getElementById('mi-unit').value||'unit',stock:+document.getElementById('mi-stock').value||0});
+  save(); goTo('master-inv');
+}
+
+render['manage-stores'] = (el)=>{
+  el.innerHTML = `<div class="panel"><h3>Add store</h3>
+    <div class="form-row">
+      <div class="field"><label>Store name</label><input id="st-name" placeholder="e.g. Rizal Branch"></div>
+      <div class="field"><label>Location</label><input id="st-loc" placeholder="City / area"></div>
+      <div class="field"><label>Manager</label><input id="st-mgr" placeholder="Manager name"></div>
+      <button class="add-btn" onclick="addStore()">Add store</button>
+    </div></div>
+    <div class="panel"><h3>Stores (${DATA.stores.length})</h3>${
+      tableOrEmpty(DATA.stores,['ID','Name','Location','Manager',''],
+        s=>`<tr><td class="mono">${s.id}</td><td>${s.name}</td><td>${s.location}</td><td>${s.manager}</td><td><button class="del" onclick="delRow('stores','${s.id}')">Remove</button></td></tr>`,5)
+    }</div>`;
+};
+function addStore(){
+  const name=document.getElementById('st-name').value.trim();
+  if(!name) return;
+  DATA.stores.push({id:nextId('ST'),name,location:document.getElementById('st-loc').value||'—',manager:document.getElementById('st-mgr').value||'—'});
+  save(); goTo('manage-stores');
+}
+
+render['view-orders'] = (el)=>{
+  const isAdmin = SESSION.role==='admin';
+  const rows = isAdmin ? DATA.orders : DATA.orders.filter(o=>o.store===SESSION.store.name);
+  const headers = isAdmin ? ['Order ID','Store','Item','Qty','Status','Date','Action'] : ['Order ID','Item','Qty','Status','Date'];
+  el.innerHTML = `<div class="panel"><h3>${isAdmin?'All store orders':'Your orders'} (${rows.length})</h3>${
+    tableOrEmpty(rows.slice().reverse(), headers,
+      o=> isAdmin
+        ? `<tr><td class="mono">${o.id}</td><td>${o.store}</td><td>${o.item}</td><td>${o.qty}</td><td>${badge(o.status)}</td><td>${fmtDate(o.date)}</td><td>${
+            o.status==='Pending' ? `<button class="del" style="color:var(--teal-dark)" onclick="setOrderStatus('${o.id}','Approved')">Approve</button> <button class="del" onclick="setOrderStatus('${o.id}','Rejected')">Reject</button>` : '—'
+          }</td></tr>`
+        : `<tr><td class="mono">${o.id}</td><td>${o.item}</td><td>${o.qty}</td><td>${badge(o.status)}</td><td>${fmtDate(o.date)}</td></tr>`,
+      headers.length)
+  }</div>`;
+};
+function setOrderStatus(id,status){
+  const o = DATA.orders.find(o=>o.id===id); if(o){o.status=status; save(); goTo('view-orders');}
+}
+
+render['new-order'] = (el)=>{
+  const opts = DATA.inventory.map(i=>`<option value="${i.name}">${i.name}</option>`).join('');
+  el.innerHTML = `<div class="panel"><h3>Place a new order — ${SESSION.store.name}</h3>
+    <div class="form-row">
+      <div class="field"><label>Item</label><select id="no-item">${opts}</select></div>
+      <div class="field"><label>Quantity</label><input id="no-qty" type="number" min="1" value="1"></div>
+      <button class="add-btn" onclick="addOrder()">Submit order</button>
+    </div></div>
+    <div class="panel"><h3>Your order history (${DATA.orders.filter(o=>o.store===SESSION.store.name).length})</h3>${
+      tableOrEmpty(DATA.orders.filter(o=>o.store===SESSION.store.name).slice().reverse(), ['Order ID','Item','Qty','Status','Date'],
+        o=>`<tr><td class="mono">${o.id}</td><td>${o.item}</td><td>${o.qty}</td><td>${badge(o.status)}</td><td>${fmtDate(o.date)}</td></tr>`,5)
+    }</div>`;
+};
+function addOrder(){
+  const item=document.getElementById('no-item').value;
+  const qty=+document.getElementById('no-qty').value||1;
+  if(!item) return;
+  DATA.orders.push({id:nextId('ORD'),store:SESSION.store.name,item,qty,status:'Pending',date:today()});
+  save(); goTo('new-order');
+}
+
+render['spoilage'] = (el)=>{
+  const isAdmin = SESSION.role==='admin';
+  const rows = isAdmin ? DATA.spoilage : DATA.spoilage.filter(s=>s.store===SESSION.store.name);
+  const opts = DATA.inventory.map(i=>`<option value="${i.name}">${i.name}</option>`).join('');
+  el.innerHTML = `<div class="panel"><h3>Log spoilage${isAdmin?'':' — '+SESSION.store.name}</h3>
+    <div class="form-row">
+      ${isAdmin?`<div class="field"><label>Store</label><select id="sp-store">${DATA.stores.map(s=>`<option value="${s.name}">${s.name}</option>`).join('')}</select></div>`:''}
+      <div class="field"><label>Item</label><select id="sp-item">${opts}</select></div>
+      <div class="field"><label>Quantity</label><input id="sp-qty" type="number" min="1" value="1"></div>
+      <div class="field"><label>Reason</label><input id="sp-reason" placeholder="e.g. Expired, damaged"></div>
+      <button class="add-btn" onclick="addSpoilage()">Log entry</button>
+    </div></div>
+    <div class="panel"><h3>Spoilage records (${rows.length})</h3>${
+      tableOrEmpty(rows.slice().reverse(), isAdmin?['ID','Store','Item','Qty','Reason','Date']:['ID','Item','Qty','Reason','Date'],
+        s=> isAdmin
+          ? `<tr><td class="mono">${s.id}</td><td>${s.store}</td><td>${s.item}</td><td>${s.qty}</td><td>${s.reason}</td><td>${fmtDate(s.date)}</td></tr>`
+          : `<tr><td class="mono">${s.id}</td><td>${s.item}</td><td>${s.qty}</td><td>${s.reason}</td><td>${fmtDate(s.date)}</td></tr>`,
+        isAdmin?6:5)
+    }</div>`;
+};
+function addSpoilage(){
+  const item=document.getElementById('sp-item').value;
+  const qty=+document.getElementById('sp-qty').value||1;
+  const reason=document.getElementById('sp-reason').value||'Unspecified';
+  const store = SESSION.role==='admin' ? document.getElementById('sp-store').value : SESSION.store.name;
+  DATA.spoilage.push({id:nextId('SPL'),store,item,qty,reason,date:today()});
+  save(); goTo('spoilage');
+}
+
+render['po-hq'] = (el)=>{
+  const opts = DATA.inventory.map(i=>`<option value="${i.name}">${i.name}</option>`).join('');
+  el.innerHTML = `<div class="panel"><h3>Create purchase order to vendor</h3>
+    <div class="form-row">
+      <div class="field"><label>Vendor</label><input id="po-vendor" placeholder="Vendor name"></div>
+      <div class="field"><label>Item</label><select id="po-item">${opts}</select></div>
+      <div class="field"><label>Quantity</label><input id="po-qty" type="number" min="1" value="1"></div>
+      <button class="add-btn" onclick="addPO()">Create P.O.</button>
+    </div></div>
+    <div class="panel"><h3>Purchase orders (${DATA.po.length})</h3>${
+      tableOrEmpty(DATA.po.slice().reverse(), ['P.O. ID','Vendor','Item','Qty','Status','Date','Action'],
+        p=>`<tr><td class="mono">${p.id}</td><td>${p.vendor}</td><td>${p.item}</td><td>${p.qty}</td><td>${badge(p.status)}</td><td>${fmtDate(p.date)}</td><td>${
+          p.status==='Pending'?`<button class="del" style="color:var(--teal-dark)" onclick="setPOStatus('${p.id}','Received')">Mark received</button>`:'—'
+        }</td></tr>`,7)
+    }</div>`;
+};
+function addPO(){
+  const vendor=document.getElementById('po-vendor').value.trim()||'Unnamed vendor';
+  const item=document.getElementById('po-item').value;
+  const qty=+document.getElementById('po-qty').value||1;
+  DATA.po.push({id:nextId('PO'),vendor,item,qty,status:'Pending',date:today()});
+  save(); goTo('po-hq');
+}
+function setPOStatus(id,status){
+  const p=DATA.po.find(p=>p.id===id); if(p){p.status=status; save(); goTo('po-hq');}
+}
+
+render['monthend'] = (el)=>{
+  const opts = DATA.inventory.map(i=>`<option value="${i.name}" data-stock="${i.stock}">${i.name}</option>`).join('');
+  el.innerHTML = `<div class="panel"><h3>Month end inventory count</h3>
+    <div class="form-row">
+      <div class="field"><label>Store</label><select id="me-store">${DATA.stores.map(s=>`<option value="${s.name}">${s.name}</option>`).join('')}</select></div>
+      <div class="field"><label>Item</label><select id="me-item">${opts}</select></div>
+      <div class="field"><label>Counted qty</label><input id="me-count" type="number" min="0" value="0"></div>
+      <button class="add-btn" onclick="addMonthEnd()">Record count</button>
+    </div></div>
+    <div class="panel"><h3>Month end records (${DATA.monthend.length})</h3>${
+      tableOrEmpty(DATA.monthend.slice().reverse(), ['ID','Store','Item','System Qty','Counted','Variance','Date'],
+        m=>`<tr><td class="mono">${m.id}</td><td>${m.store}</td><td>${m.item}</td><td>${m.system}</td><td>${m.counted}</td><td style="color:${m.variance!==0?'var(--red)':'inherit'}">${m.variance>0?'+':''}${m.variance}</td><td>${fmtDate(m.date)}</td></tr>`,7)
+    }</div>`;
+};
+function addMonthEnd(){
+  const itemSel=document.getElementById('me-item');
+  const item=itemSel.value;
+  const system=+itemSel.selectedOptions[0].dataset.stock||0;
+  const counted=+document.getElementById('me-count').value||0;
+  DATA.monthend.push({id:nextId('ME'),store:document.getElementById('me-store').value,item,system,counted,variance:counted-system,date:today()});
+  save(); goTo('monthend');
+}
+
+render['transin'] = (el)=>{
+  const opts = DATA.inventory.map(i=>`<option value="${i.name}">${i.name}</option>`).join('');
+  const storeOpts = DATA.stores.map(s=>`<option value="${s.name}">${s.name}</option>`).join('');
+  el.innerHTML = `<div class="panel"><h3>Record stock transfer between stores</h3>
+    <div class="form-row">
+      <div class="field"><label>From store</label><select id="ti-from">${storeOpts}</select></div>
+      <div class="field"><label>To store</label><select id="ti-to">${storeOpts}</select></div>
+      <div class="field"><label>Item</label><select id="ti-item">${opts}</select></div>
+      <div class="field"><label>Quantity</label><input id="ti-qty" type="number" min="1" value="1"></div>
+      <button class="add-btn" onclick="addTransIn()">Record transfer</button>
+    </div></div>
+    <div class="panel"><h3>Transfer log (${DATA.transin.length})</h3>${
+      tableOrEmpty(DATA.transin.slice().reverse(), ['ID','From','To','Item','Qty','Date'],
+        t=>`<tr><td class="mono">${t.id}</td><td>${t.from}</td><td>${t.to}</td><td>${t.item}</td><td>${t.qty}</td><td>${fmtDate(t.date)}</td></tr>`,6)
+    }</div>`;
+};
+function addTransIn(){
+  const from=document.getElementById('ti-from').value, to=document.getElementById('ti-to').value;
+  const item=document.getElementById('ti-item').value, qty=+document.getElementById('ti-qty').value||1;
+  DATA.transin.push({id:nextId('TIN'),from,to,item,qty,date:today()});
+  save(); goTo('transin');
+}
+
+render['report'] = (el)=>{
+  const totalOrders = DATA.orders.length;
+  const pending = DATA.orders.filter(o=>o.status==='Pending').length;
+  const approved = DATA.orders.filter(o=>o.status==='Approved').length;
+  const totalSpoilQty = DATA.spoilage.reduce((a,b)=>a+b.qty,0);
+  const openPO = DATA.po.filter(p=>p.status==='Pending').length;
+  const byStore = DATA.stores.map(s=>{
+    const o = DATA.orders.filter(x=>x.store===s.name).length;
+    const sp = DATA.spoilage.filter(x=>x.store===s.name).reduce((a,b)=>a+b.qty,0);
+    return `  ${s.name.padEnd(22)} orders: ${String(o).padEnd(4)} spoilage units: ${sp}`;
+  }).join('\n');
+  const text =
+`STORELINE — SUMMARY REPORT
+Generated: ${fmtDate(today())}
+
+ORDERS
+  Total orders placed ......... ${totalOrders}
+  Pending approval ............ ${pending}
+  Approved .................... ${approved}
+
+INVENTORY
+  Master items tracked ........ ${DATA.inventory.length}
+  Spoilage units logged ....... ${totalSpoilQty}
+  Stock transfers recorded .... ${DATA.transin.length}
+  Month-end counts recorded ... ${DATA.monthend.length}
+
+PURCHASE ORDERS (HQ)
+  Total P.O.s .................. ${DATA.po.length}
+  Open / pending ............... ${openPO}
+
+BY STORE
+${byStore || '  No stores on file.'}`;
+  el.innerHTML = `<div class="panel"><h3>Generate report</h3><p style="color:var(--ink-soft);font-size:13px;margin:0 0 14px;">A live snapshot compiled from current orders, inventory, spoilage and purchase order data.</p>
+    <div class="report-box">${text}</div>
+    <button class="add-btn" style="margin-top:14px" onclick="window.print()">Print report</button>
+  </div>`;
+};
+
+/* ---------------- delete helper ---------------- */
+function delRow(key,id){
+  DATA[key] = DATA[key].filter(r=>r.id!==id);
+  save();
+  if(key==='inventory') goTo('master-inv');
+  if(key==='stores') goTo('manage-stores');
+}
+
+</script>
+</body>
+</html>
