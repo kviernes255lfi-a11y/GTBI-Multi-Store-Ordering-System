@@ -39,18 +39,18 @@ a{color:inherit;}
 
 /* ---------- APP SHELL ---------- */
 .shell{display:flex;min-height:100vh;}
-.sidebar{width:230px;flex-shrink:0;background:#FCE8D5;color:#5A320A;display:flex;flex-direction:column;padding:20px 0;border-right:1px solid #EAD5C3;}
-.sidebar .brand{display:flex;align-items:center;gap:10px;color:#3D2005;padding:0 20px 20px;margin:0;border-bottom:1px solid rgba(90,50,10,.15);font-size:15px;font-weight:700;letter-spacing:-.01em;}
+.sidebar{width:230px;flex-shrink:0;background:#F3CDAA;color:#4A2204;display:flex;flex-direction:column;padding:20px 0;border-right:1px solid #DFB58F;}
+.sidebar .brand{display:flex;align-items:center;gap:10px;color:#2C1302;padding:0 20px 20px;margin:0;border-bottom:1px solid rgba(74,34,4,.15);font-size:15px;font-weight:700;letter-spacing:-.01em;}
 .sidebar .brand img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#FBF6EE;}
 .sidebar .brand span{color:var(--amber-dark);}
 nav{flex:1;padding:14px 0;overflow-y:auto;}
-nav a{display:block;text-decoration:none;padding:11px 20px;color:#6E4215;font-size:14px;font-weight:500;border-left:3px solid transparent;}
-nav a:hover{background:rgba(226,103,15,.1);color:#3D2005;}
-nav a.active{background:rgba(226,103,15,.22);color:#3D2005;border-left-color:var(--amber-dark);font-weight:600;}
-.sidebar-foot{padding:14px 20px 0;border-top:1px solid rgba(90,50,10,.15);}
-.who{font-size:12px;color:#7A5025;margin-bottom:10px;}
-.who b{color:#3D2005;display:block;font-size:13px;}
-.logout-btn{display:block;text-align:center;text-decoration:none;width:100%;padding:9px;background:transparent;border:1px solid rgba(90,50,10,.3);color:#5A320A;font-size:13px;font-weight:600;box-sizing:border-box;}
+nav a{display:block;text-decoration:none;padding:11px 20px;color:#5C2B05;font-size:14px;font-weight:500;border-left:3px solid transparent;}
+nav a:hover{background:rgba(184,78,8,.12);color:#2C1302;}
+nav a.active{background:rgba(184,78,8,.22);color:#2C1302;border-left-color:var(--amber-dark);font-weight:600;}
+.sidebar-foot{padding:14px 20px 0;border-top:1px solid rgba(74,34,4,.15);}
+.who{font-size:12px;color:#6E360A;margin-bottom:10px;}
+.who b{color:#2C1302;display:block;font-size:13px;}
+.logout-btn{display:block;text-align:center;text-decoration:none;width:100%;padding:9px;background:transparent;border:1px solid rgba(74,34,4,.3);color:#4A2204;font-size:13px;font-weight:600;box-sizing:border-box;}
 .logout-btn:hover{background:var(--red);border-color:var(--red);color:#fff;}
 
 .main{flex:1;min-width:0;padding:28px 34px;overflow-x:auto;}
