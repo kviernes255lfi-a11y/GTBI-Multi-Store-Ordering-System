@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}View Orders — StoreLine{% endblock %}
+{% block page_title %}View Orders{% endblock %}
+{% block page_sub %}{{ current_user.store.name }} view{% endblock %}
+{% block content %}
+<div class="panel">
+  <h3>Your orders ({{ orders|length }})</h3>
+  <table>
+    <thead><tr><th>Order ID</th><th>Item</th><th>Qty</th><th>Status</th><th>Date</th></tr></thead>
+    <tbody>
+      {% for o in orders %}
+      <tr>
+        <td class="mono">ORD-{{ '%04d'|format(o.id) }}</td><td>{{ o.item_name }}</td><td>{{ o.qty }}</td>
+        <td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td>
+        <td>{{ o.created_at.strftime('%b %d, %Y') }}</td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="5">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}StoreLine{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="shell">
+  <div class="sidebar">
+    <p class="brand">Store<span>Line</span></p>
+    <nav>
+      {% if current_user.role == 'admin' %}
+        <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request.endpoint=='admin.dashboard' }}">Dashboard</a>
+        <a href="{{ url_for('admin.inventory') }}" class="{{ 'active' if request.endpoint=='admin.inventory' }}">Master Inventory Items</a>
+        <a href="{{ url_for('admin.stores') }}" class="{{ 'active' if request.endpoint=='admin.stores' }}">Manage Stores</a>
+        <a href="{{ url_for('admin.orders') }}" class="{{ 'active' if request.endpoint=='admin.orders' }}">View Orders</a>
+        <a href="{{ url_for('admin.po_hq') }}" class="{{ 'active' if request.endpoint=='admin.po_hq' }}">P.O HQ</a>
+        <a href="{{ url_for('admin.month_end') }}" class="{{ 'active' if request.endpoint=='admin.month_end' }}">Month End Inventory</a>
+        <a href="{{ url_for('admin.spoilage') }}" class="{{ 'active' if request.endpoint=='admin.spoilage' }}">Spoilage</a>
+        <a href="{{ url_for('admin.trans_in') }}" class="{{ 'active' if request.endpoint=='admin.trans_in' }}">Trans-In</a>
+        <a href="{{ url_for('admin.report') }}" class="{{ 'active' if request.endpoint=='admin.report' }}">Generate Report</a>
+      {% else %}
+        <a href="{{ url_for('store.dashboard') }}" class="{{ 'active' if request.endpoint=='store.dashboard' }}">Dashboard</a>
+        <a href="{{ url_for('store.new_order') }}" class="{{ 'active' if request.endpoint=='store.new_order' }}">New Orders</a>
+        <a href="{{ url_for('store.orders') }}" class="{{ 'active' if request.endpoint=='store.orders' }}">View Orders</a>
+        <a href="{{ url_for('store.spoilage') }}" class="{{ 'active' if request.endpoint=='store.spoilage' }}">Spoilage</a>
+      {% endif %}
+    </nav>
+    <div class="sidebar-foot">
+      <div class="who">
+        <b>{{ current_user.username }}</b>
+        <span>{{ 'HQ Administrator' if current_user.role == 'admin' else current_user.store.name }}</span>
+      </div>
+      <a class="logout-btn" href="{{ url_for('auth.logout') }}">Log out</a>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1>{% block page_title %}{% endblock %}</h1>
+        <div class="sub">{% block page_sub %}{% endblock %}</div>
+      </div>
+    </div>
+    {% block content %}{% endblock %}
+  </div>
+</div>
+</body>
+</html>

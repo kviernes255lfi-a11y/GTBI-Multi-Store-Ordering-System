@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — StoreLine{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_sub %}{{ current_user.store.name }} view{% endblock %}
+{% block content %}
+<div class="stat-row">
+  <div class="stat"><div class="n">{{ stats.orders }}</div><div class="l">Orders placed</div></div>
+  <div class="stat"><div class="n">{{ stats.pending }}</div><div class="l">Pending orders</div></div>
+  <div class="stat"><div class="n">{{ stats.spoilage }}</div><div class="l">Spoilage logged</div></div>
+  <div class="stat"><div class="n">{{ stats.items }}</div><div class="l">Items in catalog</div></div>
+</div>
+<div class="panel">
+  <h3>Your recent orders</h3>
+  <table>
+    <thead><tr><th>Order ID</th><th>Item</th><th>Qty</th><th>Status</th><th>Date</th></tr></thead>
+    <tbody>
+      {% for o in recent_orders %}
+      <tr>
+        <td class="mono">ORD-{{ '%04d'|format(o.id) }}</td><td>{{ o.item_name }}</td><td>{{ o.qty }}</td>
+        <td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td>
+        <td>{{ o.created_at.strftime('%b %d, %Y') }}</td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="5">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}P.O HQ — StoreLine{% endblock %}
+{% block page_title %}P.O HQ{% endblock %}
+{% block page_sub %}HQ Administrator view{% endblock %}
+{% block content %}
+<div class="panel">
+  <h3>Create purchase order to vendor</h3>
+  <form method="post" class="form-row">
+    <div class="field"><label>Vendor</label><input name="vendor" placeholder="Vendor name" required></div>
+    <div class="field"><label>Item</label>
+      <select name="item_name">{% for it in items %}<option value="{{ it.name }}">{{ it.name }}</option>{% endfor %}</select>
+    </div>
+    <div class="field"><label>Quantity</label><input name="qty" type="number" min="1" value="1"></div>
+    <button class="add-btn" type="submit">Create P.O.</button>
+  </form>
+</div>
+<div class="panel">
+  <h3>Purchase orders ({{ pos|length }})</h3>
+  <table>
+    <thead><tr><th>P.O. ID</th><th>Vendor</th><th>Item</th><th>Qty</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+    <tbody>
+      {% for p in pos %}
+      <tr>
+        <td class="mono">PO-{{ '%04d'|format(p.id) }}</td><td>{{ p.vendor }}</td>
+        <td>{{ p.item_name }}</td><td>{{ p.qty }}</td>
+        <td><span class="badge {{ p.status|lower }}">{{ p.status }}</span></td>
+        <td>{{ p.created_at.strftime('%b %d, %Y') }}</td>
+        <td>
+          {% if p.status == 'Pending' %}
+          <form method="post" action="{{ url_for('admin.receive_po', po_id=p.id) }}" style="display:inline">
+            <button class="del" style="color:var(--teal-dark)" type="submit">Mark received</button></form>
+          {% else %}—{% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="7">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
