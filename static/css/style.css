@@ -190,6 +190,101 @@ nav a.active{background:#EA580C;color:#ffffff;border-left-color:#C2410C;font-wei
   background-color: #FAFAFA;
 }
 
+/* ---------- NEW ORDER FORM & ITEM CARDS STYLING ---------- */
+.order-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-meta-box {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #E5E7EB;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.search-item-box {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #E5E7EB;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.item-card-box {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border: 1px solid #E5E7EB;
+  border-left: 5px solid #EA580C;
+  transition: all 0.2s ease;
+}
+
+.item-card-box:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.item-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1F2937;
+  letter-spacing: 0.03em;
+}
+
+.item-count-badge {
+  background: #FFF7ED;
+  color: #EA580C;
+  border: 1px solid #FFEDD5;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.order-actions-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid #E5E7EB;
+  margin-top: 10px;
+}
+
+.submit-order-btn {
+  background-color: #10B981;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  transition: filter 0.2s;
+}
+
+.submit-order-btn:hover {
+  filter: brightness(1.08);
+}
+
 /* Fallback Classes */
 .panel{background:var(--panel);border:1px solid var(--line);padding:20px;margin-bottom:20px;}
 .panel h3{margin:0 0 14px;font-size:14px;font-weight:600;}
