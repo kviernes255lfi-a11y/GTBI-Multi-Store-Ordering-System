@@ -1,33 +1,64 @@
 {% extends "base.html" %}
-{% block title %}New Orders — Golden Tri-Bloc Inc.{% endblock %}
-{% block page_title %}New Orders{% endblock %}
-{% block page_sub %}{{ current_user.store.name }} view{% endblock %}
+{% block title %}New Order — Golden Tri-Bloc Inc.{% endblock %}
+{% block page_title %}Create New Purchase Order{% endblock %}
+{% block page_sub %}Mag-fill out ng form upang mag-submit ng order sa Central Admin / Commissary.{% endblock %}
 {% block content %}
-<div class="panel">
-  <h3>Place a new order — {{ current_user.store.name }}</h3>
-  <form method="post" class="form-row">
-    <div class="field"><label>Item</label>
-      <select name="item_name">{% for it in items %}<option value="{{ it.name }}">{{ it.name }}</option>{% endfor %}</select>
+
+<div class="order-form-container">
+  
+  <!-- Top Meta Form Info -->
+  <div class="order-meta-box">
+    <div class="field" style="margin-bottom:0;">
+      <label>P.O. Number:</label>
+      <input type="text" value="{{ po_number|default('PO-20260923-004') }}" readonly style="color: #EA580C; font-weight: 700;">
     </div>
-    <div class="field"><label>Quantity</label><input name="qty" type="number" min="1" value="1"></div>
-    <button class="add-btn" type="submit">Submit order</button>
-  </form>
+    <div class="field" style="margin-bottom:0;">
+      <label>Store Branch:</label>
+      <input type="text" value="{{ current_user.store.name }}" readonly>
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label>P.O. Date:</label>
+      <input type="text" value="{{ current_date|default('09/23/2026') }}" readonly>
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label>Prepared By (Crew / Staff Name):</label>
+      <input type="text" placeholder="I-type ang pangalan ng nag-order...">
+    </div>
+  </div>
+
+  <!-- Search Raw Material Box -->
+  <div class="search-item-box">
+    <div class="field" style="margin-bottom:0;">
+      <label>Search Raw Material Item:</label>
+      <input type="text" placeholder="Maghanap ng raw material o item...">
+    </div>
+  </div>
+
+  <!-- Items Grid Cards -->
+  <div class="items-grid">
+    {% set items = [
+      ("WRAPPER", 6), ("BAGS", 6), ("BOXES", 20),
+      ("PAPER CUPS/LIDS", 22), ("HOT CUPS/LIDS", 4), ("BOWL CUPS/LIDS", 5),
+      ("OTHERS", 21), ("BUNWICH FILLINGS", 25), ("COFFEE", 12),
+      ("HOT CHOCOLATE", 3), ("DUNKCREATION", 1), ("SOFTDRINKS", 6),
+      ("OTHER BEVERAGES", 22), ("MINERAL WATER", 1), ("PROMO ITEM", 24),
+      ("CLEANING MATERIALS", 24), ("OFFICE SUPPLIES", 12), ("UTENSILS", 47),
+      ("MISCELLANEOUS", 18)
+    ] %}
+
+    {% for name, count in items %}
+    <div class="item-card-box">
+      <span class="item-name">{{ name }}</span>
+      <span class="item-count-badge">{{ count }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Submit Action Row -->
+  <div class="order-actions-row">
+    <button type="submit" class="submit-order-btn">Submit Order</button>
+  </div>
+
 </div>
-<div class="panel">
-  <h3>Your order history ({{ orders|length }})</h3>
-  <table>
-    <thead><tr><th>Order ID</th><th>Item</th><th>Qty</th><th>Status</th><th>Date</th></tr></thead>
-    <tbody>
-      {% for o in orders %}
-      <tr>
-        <td class="mono">ORD-{{ '%04d'|format(o.id) }}</td><td>{{ o.item_name }}</td><td>{{ o.qty }}</td>
-        <td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td>
-        <td>{{ o.created_at.strftime('%b %d, %Y') }}</td>
-      </tr>
-      {% else %}
-      <tr class="empty-row"><td colspan="5">No records yet.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+
 {% endblock %}
