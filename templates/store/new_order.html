@@ -30,23 +30,13 @@
     </div>
   </div>
 
-  <!-- Items Grid Cards na may Full-Width Expandable Dropdown -->
+  <!-- Items Grid Cards na galing sa Database / categories_dict -->
   <div class="items-grid">
-    {% set categories = [
-      ("WRAPPER", 6), ("BAGS", 6), ("BOXES", 20),
-      ("PAPER CUPS/LIDS", 22), ("HOT CUPS/LIDS", 4), ("BOWL CUPS/LIDS", 5),
-      ("OTHERS", 21), ("BUNWICH FILLINGS", 25), ("COFFEE", 12),
-      ("HOT CHOCOLATE", 3), ("DUNKCREATION", 1), ("SOFTDRINKS", 6),
-      ("OTHER BEVERAGES", 22), ("MINERAL WATER", 1), ("PROMO ITEM", 24),
-      ("CLEANING MATERIALS", 24), ("OFFICE SUPPLIES", 12), ("UTENSILS", 47),
-      ("MISCELLANEOUS", 18)
-    ] %}
-
-    {% for name, count in categories %}
+    {% for cat_name, items in categories_dict.items() %}
     <div class="item-card-container">
       <a href="javascript:void(0);" class="item-card-box" onclick="toggleCategory('cat-{{ loop.index }}')">
-        <span class="item-name">{{ name }}</span>
-        <span class="item-count-badge">{{ count }}</span>
+        <span class="item-name">{{ cat_name }}</span>
+        <span class="item-count-badge">{{ items|length }}</span>
       </a>
       
       <!-- Ang Dropdown List na lilitaw at sasakop sa buong row -->
@@ -56,36 +46,17 @@
           <span>QTY</span>
         </div>
         
-        <!-- Mga konkretong item sa loob ng kategoryang ito (Naka-grid column para maganda tingnan) -->
+        <!-- Dynamic loop para sa mga totoong item sa ilalim ng kategoryang ito -->
         <div class="dropdown-items-container">
+          {% for item in items %}
           <div class="dropdown-item-row">
             <div class="item-info-text">
-              <strong>DONUT WRAPPER - PLASTIC</strong>
-              <span class="unit-badge">PCS</span>
+              <strong>{{ item.name }}</strong>
+              <span class="unit-badge">{{ item.unit|default('PCS') }}</span>
             </div>
-            <input type="number" value="0" class="qty-input">
+            <input type="number" name="item_{{ item.id }}" value="0" class="qty-input">
           </div>
-          <div class="dropdown-item-row">
-            <div class="item-info-text">
-              <strong>DONUT WRAPPER PAPER - 2024</strong>
-              <span class="unit-badge">PCS</span>
-            </div>
-            <input type="number" value="0" class="qty-input">
-          </div>
-          <div class="dropdown-item-row">
-            <div class="item-info-text">
-              <strong>BUNWICH PAPER - BACON</strong>
-              <span class="unit-badge">PCS</span>
-            </div>
-            <input type="number" value="0" class="qty-input">
-          </div>
-          <div class="dropdown-item-row">
-            <div class="item-info-text">
-              <strong>BUNWICH PAPER - HAM & CHEESE/TUNA</strong>
-              <span class="unit-badge">PCS</span>
-            </div>
-            <input type="number" value="0" class="qty-input">
-          </div>
+          {% endfor %}
         </div>
       </div>
     </div>
