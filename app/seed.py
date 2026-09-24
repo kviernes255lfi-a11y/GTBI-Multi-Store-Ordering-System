@@ -207,7 +207,7 @@ def seed_if_empty():
         InventoryItem(name="DUNKIN YAN PILLOW-STRAWBERRY", category="PROMO ITEM", unit="BOX"),
         InventoryItem(name="DUNKIN YAN PILLOW-CHOCOLATE", category="PROMO ITEM", unit="PCS"),
         InventoryItem(name='23" UMBRELLA WITH 12 PANELS (MAGENTA)', category="PROMO ITEM", unit="PCS"),
-        InventoryItem(name="23" UMBRELLA WITH 12 PANELS (ORANGE)", category="PROMO ITEM", unit="PCS"),
+        InventoryItem(name='23" UMBRELLA WITH 12 PANELS (ORANGE)', category="PROMO ITEM", unit="PCS"),
         InventoryItem(name="2026 BWS POGI CARD 1", category="PROMO ITEM", unit="PCS"),
         InventoryItem(name="BIG BALLOONS 12" W/LOGO", category="PROMO ITEM", unit="PCS"),
         InventoryItem(name="SMALL BALLOONS 6"", category="PROMO ITEM", unit="PCS"),
