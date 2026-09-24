@@ -32,7 +32,7 @@ def seed_if_empty():
         InventoryItem(name="SMALL BAG BIODEGRADABLE (2024)", category="BAGS", unit="PCS"),
         InventoryItem(name="DUNKIN SMALL PAPER BAG", category="BAGS", unit="PCS"),
         InventoryItem(name="ECO BAG 20X24", category="BAGS", unit="PCS"),
-        InventoryItem(name="DUNKIN' SMALL GIFT PAPER BAG W/ HANDLE (12.24" X 6.1" (W) X 3.94"(L)", category="BAGS", unit="PCS"),
+        InventoryItem(name='DUNKIN SMALL GIFT PAPER BAG W/ HANDLE (12.24" X 6.1" (W) X 3.94"(L)', category="BAGS", unit="PCS"),
         
         # BOXES
         InventoryItem(name="2024 SUPREME BUNDLE BOX", category="BOXES", unit="PCS"),
