@@ -84,10 +84,3 @@ def spoilage():
     items = InventoryItem.query.all()
     records = Spoilage.query.filter_by(store_id=current_user.store_id).order_by(Spoilage.id.desc()).all()
     return render_template("store/spoilage.html", items=items, records=records, is_admin=False)
-
-@store_bp.route("/force-seed-db-xyz")
-def force_seed_db():
-    from .seed import seed_if_empty
-    db.create_all()
-    seed_if_empty()
-    return "Database created and seeded successfully for Render!"
