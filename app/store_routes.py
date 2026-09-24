@@ -4,6 +4,7 @@ from flask_login import current_user
 
 from .extensions import db
 from .models import InventoryItem, Order, Spoilage
+from .seed import seed_if_empty
 
 store_bp = Blueprint("store", __name__, url_prefix="/store")
 
@@ -52,7 +53,7 @@ def new_order():
     categories_dict = defaultdict(list)
     
     for item in all_items:
-        cat_name = getattr(item, 'category', 'MISCELLANEOUS')
+        cat_name = item.category if (getattr(item, 'category', None) and item.category.strip()) else 'MISCELLANEOUS'
         categories_dict[cat_name].append(item)
         
     my_orders = Order.query.filter_by(store_id=current_user.store_id).order_by(Order.id.desc()).all()
@@ -84,3 +85,11 @@ def spoilage():
     items = InventoryItem.query.all()
     records = Spoilage.query.filter_by(store_id=current_user.store_id).order_by(Spoilage.id.desc()).all()
     return render_template("store/spoilage.html", items=items, records=records, is_admin=False)
+
+
+# Pansamantalang route para i-seed ang database sa Render Free tier
+@store_bp.route("/force-seed-db-xyz")
+def force_seed_db():
+    db.create_all()
+    seed_if_empty()
+    return "Database created and seeded successfully for Render!"
