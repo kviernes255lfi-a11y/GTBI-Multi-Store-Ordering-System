@@ -109,7 +109,7 @@ def seed_if_empty():
         InventoryItem(name="COLORED STICKER (ROUND) (50 PCS/SHEET)", category="OTHERS", unit="PCS"),
         InventoryItem(name="CORNED BEEF STICKER (15PCS/SHEET)", category="OTHERS", unit="PCS"),
         InventoryItem(name="DUNKIN CHEESY JALAPEÑO CHUNKY TUNA STICKER (15PCS/SHEET)", category="OTHERS", unit="PCS"),
-        InventoryItem(name="CLAYCO STICKER (5" DIA)", category="OTHERS", unit="PCS"),
+        InventoryItem(name='CLAYCO STICKER (5" DIA)', category="OTHERS", unit="PCS"),
         InventoryItem(name="FLAVORED ICED COFFEE - PENTAGON COUNTER/TABLE DISPLAY", category="OTHERS", unit="PCS"),
         InventoryItem(name="SPILL PROOF LINER", category="OTHERS", unit="PCS"),
         InventoryItem(name="VARIETY LABELS (GDI) - SHOP", category="OTHERS", unit="PCS"),
