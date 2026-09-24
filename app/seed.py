@@ -5,8 +5,8 @@ from .models import User, Store, InventoryItem
 def seed_if_empty():
     """Populate first-run demo data: HQ admin, 3 stores, a store login per
     store, and a starter inventory catalog. Safe to call every boot —
-    it only runs once, when the users table is empty."""
-    if User.query.first():
+    it only runs once, when the inventory items table is empty."""
+    if InventoryItem.query.first():
         return
 
     stores = [
@@ -331,15 +331,20 @@ def seed_if_empty():
         InventoryItem(name="OTHER ITEM 20", category="OTHERS", unit="PCS", stock=100),
         InventoryItem(name="OTHER ITEM 21", category="OTHERS", unit="PCS", stock=100),
     ]
+    
+    db.session.add_all(items)
 
-    admin = User(username="admin", role="admin")
-    admin.set_password("admin123")
-    db.session.add(admin)
+    # Gawin lamang ito kung wala pang admin user
+    if not User.query.filter_by(username="admin").first():
+        admin = User(username="admin", role="admin")
+        admin.set_password("admin123")
+        db.session.add(admin)
 
     for s in stores:
         username = s.name.lower().replace(" ", "")
-        u = User(username=username, role="store", store=s)
-        u.set_password("store123")
-        db.session.add(u)
+        if not User.query.filter_by(username=username).first():
+            u = User(username=username, role="store", store=s)
+            u.set_password("store123")
+            db.session.add(u)
 
     db.session.commit()
